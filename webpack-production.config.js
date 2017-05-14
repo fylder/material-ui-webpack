@@ -6,9 +6,11 @@ const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 const config = {
         entry: {
             login: [
-                './src/app/app.js',],
+                './src/app/app.js'],
             register: [
-                './src/app/register.js',],
+                './src/app/register.js'],
+            home: [
+                './src/app/home.js'],
             react: ['react', 'react-dom', 'material-ui'],
         },
         // Render source-map file for final build

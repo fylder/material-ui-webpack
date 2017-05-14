@@ -1,0 +1,20 @@
+
+.container {
+    margin: 0 auto;
+    max-width: 1280px;
+    width: 90%;
+}
+
+.lay-left {
+    background: #373c47;
+    height: 100%;
+    width: 20%;
+    float: left;
+}
+
+.lay-right {
+    background: #FFFFFF;
+    height: 100%;
+    width: 80%;
+    float: left;
+}

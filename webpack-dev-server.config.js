@@ -11,7 +11,11 @@ const config = {
             'webpack/hot/only-dev-server',
             './src/app/app.js',],
         register: [
-            './src/app/register.js',],
+            './src/app/register.js'],
+        home: [
+            './src/app/home.js'],
+        manage: [
+            './src/app/manage.js'],
         react: [
             'react', 'react-dom', 'material-ui'],
     },
