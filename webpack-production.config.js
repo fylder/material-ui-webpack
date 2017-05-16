@@ -11,6 +11,8 @@ const config = {
                 './src/app/register.js'],
             home: [
                 './src/app/home.js'],
+            manage: [
+                './src/app/manage.js'],
             react: ['react', 'react-dom', 'material-ui'],
         },
         // Render source-map file for final build
