@@ -40,23 +40,18 @@ const muiTheme = getMuiTheme({
 class PhotoTitle extends Component {
     constructor(props, context) {
         super(props, context);
-        this.handleTouchTapLogo = this.handleTouchTapLogo.bind(this);
         this.handleTouchTapLogin = this.handleTouchTapLogin.bind(this);
 
         let title = document.title;//标题
         let url;
         if (title == "login") {
-            url = "LOGIN";
-        }else{
             url = "REGISTER";
+        }else{
+            url = "LOGIN";
         }
         this.state = {
             info: url
         };
-    }
-
-    handleTouchTapLogo() {
-        alert("click logo");
     }
 
     handleTouchTapLogin() {
