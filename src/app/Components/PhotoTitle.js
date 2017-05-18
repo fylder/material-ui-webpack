@@ -42,6 +42,17 @@ class PhotoTitle extends Component {
         super(props, context);
         this.handleTouchTapLogo = this.handleTouchTapLogo.bind(this);
         this.handleTouchTapLogin = this.handleTouchTapLogin.bind(this);
+
+        let title = document.title;//标题
+        let url;
+        if (title == "login") {
+            url = "LOGIN";
+        }else{
+            url = "REGISTER";
+        }
+        this.state = {
+            info: url
+        };
     }
 
     handleTouchTapLogo() {
@@ -49,7 +60,11 @@ class PhotoTitle extends Component {
     }
 
     handleTouchTapLogin() {
-        window.location.href = "register";
+        if (this.state.info == "LOGIN") {
+            window.location.href = "login";
+        } else {
+            window.location.href = "register";
+        }
     }
 
     render() {
@@ -59,7 +74,7 @@ class PhotoTitle extends Component {
                 <AppBar zDepth={2} style={styles.theme}
                         title={<a style={styles.title} href="http://www.fylder.me:8080/photo">Photo</a> }
                         iconElementLeft={<div></div>}
-                        iconElementRight={<FlatButton label="REGISTER"
+                        iconElementRight={<FlatButton label={this.state.info}
                                                       onTouchTap={this.handleTouchTapLogin}/>}
                 />
             </MuiThemeProvider>
