@@ -55,7 +55,7 @@ const styles = {
     },
     card_head: {},
     card_title: {
-        paddingTop: 32,
+        paddingTop: 42,
         marginLeft: 24
     },
     card_like: {
@@ -82,7 +82,6 @@ const styles = {
         color: grey600
     },
     card_photo: {
-
         marginTop: 24,
         marginRight: 24,
         float: 'right'
@@ -127,7 +126,7 @@ class UserInfo extends Component {
                             </div>
                             <div style={styles.card_div}>
                                 <div style={styles.card_head}>
-                                    <Avatar src="img/head.png" size={84}/>
+                                    <Avatar src="img/head.png" size={108}/>
                                 </div>
                                 <div style={ styles.card_title}>
                                     <span style={styles.head_title}>fylder</span>
