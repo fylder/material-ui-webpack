@@ -41,7 +41,12 @@ const styles = {
         fontSize: 24,
         paddingTop: 24
     }
-    ,
+    , info_header: {
+        borderLeftWidth: 12,
+        borderLeftColor: pink500,
+        marginTop: 8,
+        display: 'inline-block'
+    }
 };
 
 const muiTheme = getMuiTheme({
@@ -57,7 +62,6 @@ class UserInfo extends Component {
     }
 
 
-
     handleTouchTapLogin() {
         window.location.href = "register";
     }
@@ -70,6 +74,11 @@ class UserInfo extends Component {
                     <Card style={styles.card} zDepth={2}>
                         <div style={ styles.card_title}>
                             <span style={styles.head_title}>fylder</span>
+                        </div>
+                        <div>
+                            <blockquote style={styles.info_header}><p>草在结它的籽，风在吹它的叶，我们站着什么都不说，就十分的美好</p>
+                            </blockquote>
+
                         </div>
                         <div style={ styles.card_title2}>
                             <span style={styles.head_title2}>剑指锁妖塔</span>
