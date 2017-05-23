@@ -16,6 +16,8 @@ const config = {
             './src/app/home.js'],
         manage: [
             './src/app/manage.js'],
+        picture:[
+            './src/app/picture.js'],
         react: [
             'react', 'react-dom', 'material-ui'],
     },

@@ -11,3 +11,24 @@ body {
 a {
     text-decoration: none
 }
+
+/*相片*/
+.App {
+    padding-top: 28px;
+}
+
+.loading-msg {
+    font-size: 20px;
+    font-weight: 200;
+    color: #666;
+    width: 130px;
+    margin: 0 auto;
+}
+#msg-app-loading{
+    margin-top: 60px;
+}
+#msg-loading-more{
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+}
