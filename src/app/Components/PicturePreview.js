@@ -10,43 +10,6 @@ import $ from 'jquery';
 import _ from 'lodash';
 
 
-// const PHOTO_SET = [
-//     {
-//         src: 'http://www.fylder.me:8080/photo/assets/img/index.jpg',
-//         srcset: [
-//             'http://www.fylder.me:8080/photo/assets/img/index.jpg 1024w',
-//             'http://www.fylder.me:8080/photo/assets/img/index.jpg 800w',
-//             'http://www.fylder.me:8080/photo/assets/img/index.jpg 500w',
-//             'http://www.fylder.me:8080/photo/assets/img/index.jpg 320w',
-//         ],
-//         sizes: [
-//             '(min-width: 480px) 50vw',
-//             '(min-width: 1024px) 33.3vw',
-//             '100vw'
-//         ],
-//         width: 1920,
-//         height: 1080,
-//         alt: 'image 1',
-//     },
-//     {
-//         src: 'http://www.fylder.me:8080/photo/assets/img/index2.jpg',
-//         srcset: [
-//             'http://www.fylder.me:8080/photo/assets/img/index2.jpg 1024w',
-//             'http://www.fylder.me:8080/photo/assets/img/index2.jpg 800w',
-//             'http://www.fylder.me:8080/photo/assets/img/index2.jpg 500w',
-//             'http://www.fylder.me:8080/photo/assets/img/index2.jpg 320w',
-//         ],
-//         sizes: [
-//             '(min-width: 480px) 50vw',
-//             '(min-width: 1024px) 33.3vw',
-//             '100vw'
-//         ],
-//         width: 1024,
-//         height: 600,
-//         alt: 'image 2',
-//     }
-// ];
-
 class PicturePreview extends Component {
 
     constructor(props, context) {
