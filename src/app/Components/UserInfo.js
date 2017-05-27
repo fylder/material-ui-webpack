@@ -120,7 +120,7 @@ class UserInfo extends Component {
                     <Card style={styles.card} zDepth={2}>
                         <div>
                             <div>
-                                <FloatingActionButton style={styles.card_photo} secondary={true}>
+                                <FloatingActionButton href={'picture.html'} style={styles.card_photo} secondary={true}>
                                     <span style={ styles.card_photo_span}>相册</span>
                                 </FloatingActionButton>
                             </div>
