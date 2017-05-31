@@ -120,13 +120,13 @@ class UserInfo extends Component {
                     <Card style={styles.card} zDepth={2}>
                         <div>
                             <div>
-                                <FloatingActionButton href={'picture.html'} style={styles.card_photo} secondary={true}>
+                                <FloatingActionButton href={'user/collect'} style={styles.card_photo} secondary={true}>
                                     <span style={ styles.card_photo_span}>相册</span>
                                 </FloatingActionButton>
                             </div>
                             <div style={styles.card_div}>
                                 <div style={styles.card_head}>
-                                    <Avatar src="img/head.png" size={108}/>
+                                    <Avatar src="yan/yan.jpg" size={108}/>
                                 </div>
                                 <div style={ styles.card_title}>
                                     <span style={styles.head_title}>fylder</span>

@@ -127,9 +127,9 @@ class LinkButton extends Component {
         setTimeout(function () {
             console.log("type:" + type);
             if (type == 'info') {
-                window.location.href = "home.html";
+                window.location.href = "home";
             } else if (type == "photo") {
-                window.location.href = "manage.html";
+                window.location.href = "user/photo/manage";
             }
 
         }, 400);
