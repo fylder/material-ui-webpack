@@ -32,14 +32,14 @@ const config = {
     devtool: 'eval',
     output: {
         path: path.resolve(__dirname, 'build'), // Path of output file
-        filename: '[name].js',
+        filename: 'react/[name].js',
     },
     plugins: [
         // Enables Hot Modules Replacement
         new webpack.HotModuleReplacementPlugin(),
         new CommonsChunkPlugin({
                 name: ['react'],
-                filename: 'react.js',
+                filename: 'react/react.js',
                 minChunks: Infinity
             }
         ),

@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 const config = {
         entry: {
@@ -22,7 +23,7 @@ const config = {
         // output config
         output: {
             path: path.resolve(__dirname, 'build'), // Path of output file
-            filename: '[name].js', // Name of output file
+            filename: 'react/[name].js', // Name of output file
         },
         plugins: [
             // Define production build to allow React to strip out unnecessary checks
@@ -34,13 +35,13 @@ const config = {
                 }
             }),
             // Minify the bundle
-            new webpack.optimize.UglifyJsPlugin({
+            new UglifyJsPlugin({
                 sourceMap: false,
                 warnings: false,
             }),
             new CommonsChunkPlugin({
                     name: ['react'],
-                    filename: 'react.js',
+                    filename: 'react/react.js',
                     minChunks: Infinity
                 }
             ),
