@@ -3,82 +3,135 @@
  */
 
 import React, {Component} from "react";
-import {pink500, grey50, grey700, grey800} from "material-ui/styles/colors";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {pink500} from 'material-ui/styles/colors';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import LinearProgress from 'material-ui/LinearProgress';
 
 const styles = {
+    container: {
+        textAlign: 'center',
+        paddingTop: 20,
+    },
+};
 
-    title: {
-        color: '#FFFFFF',
-        margin: 0
-    },
-
-    theme: {
-        background: pink500,
-    },
-    button: {
-        margin: 12,
-    },
-    card: {
-        background: grey50,
-        height: 480,
-        margin: 0,
-        paddingLeft: '10%',
-    },
-    card_title: {
-        paddingTop: 60,
-    }, card_title2: {
-        paddingTop: 24,
-    },
-    head_title: {
-        color: grey800,
-        fontSize: 36,
-    },
-    head_title2: {
-        color: grey700,
-        fontSize: 24,
-        paddingTop: 24
-    }
-    ,
+const style = {
+    margin: 4,
 };
 
 const muiTheme = getMuiTheme({
     palette: {
         accent1Color: pink500,
+        secondaryColor: pink500,
     },
 });
 
-class PhotoManage extends Component {
+
+class PhotoTable extends Component {
+
     constructor(props, context) {
         super(props, context);
-        this.handleTouchTapLogin = this.handleTouchTapLogin.bind(this);
     }
 
+    handleTouchTapUpload = (id) => {
+        console.log("id:" + id);
+    };
 
+    render() {
+        return (<Table selectable={false}>
+            <TableHeader displaySelectAll={false}
+                         adjustForCheckbox={false}>
+                <TableRow>
+                    <TableHeaderColumn tooltip="序号">ID</TableHeaderColumn>
+                    <TableHeaderColumn tooltip="相册">相册</TableHeaderColumn>
+                    <TableHeaderColumn tooltip="简介">简介</TableHeaderColumn>
+                    <TableHeaderColumn tooltip="操作"><FlatButton label="操作" disabled={true}/></TableHeaderColumn>
+                </TableRow>
+            </TableHeader>
+            <TableBody showRowHover={true}
+                       displayRowCheckbox={false}>
+                {this.props.datas.map((data, index) => {
+                    return (<TableRow
+                        hoverable={true}>
+                        <TableRowColumn>{index + 1}</TableRowColumn>
+                        <TableRowColumn>{data.name}</TableRowColumn>
+                        <TableRowColumn>{data.info}</TableRowColumn>
+                        <TableRowColumn>
+                            <RaisedButton label="upload"
+                                          secondary={true}
+                                          style={style}
+                                          onTouchTap={this.handleTouchTapUpload.bind(this, data.id)}
+                            />
+                        </TableRowColumn>
+                    </TableRow>);
+                })}
+            </TableBody>
+        </Table>)
+    }
+}
+const LinearProgressLoading = () => (
+    <LinearProgress color={pink500} mode="indeterminate"/>
+);
+const LinearProgressLoaded = () => (
+    <LinearProgress color={pink500} mode="determinate" value={100}/>
+);
 
-    handleTouchTapLogin() {
-        window.location.href = "register";
+class PhotoManage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+            loadingView: <LinearProgressLoading/>,
+            datas: [{
+                'id': 0,
+                'name': '未知',
+                'info': "未知",
+                'gender': '未知'
+            }]
+        };
+
+        setTimeout(() => {
+            this.setState({
+                loading: false,
+                loadingView: <LinearProgressLoaded/>,
+                datas: [{
+                    'id': 1,
+                    'name': 'ahh',
+                    'info': "ahh's walala",
+                    'gender': 'male'
+                }, {
+                    'id': 2,
+                    'name': 'wakaka',
+                    'info': "wakaka's ahh",
+                }, {
+                    'id': 3,
+                    'name': 'walala',
+                    'info': "walala's ahh",
+                }
+                ]
+            });
+        }, 2000);
     }
 
     render() {
-
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div style={styles.container}>
-                    <Card style={styles.card} zDepth={2}>
-                        <div style={ styles.card_title}>
-                            <span style={styles.head_title}>相册管理</span>
-                        </div>
-                        <div style={ styles.card_title2}>
-                            <span style={styles.head_title2}>剑指锁妖塔</span>
-                        </div>
-
-                    </Card>
+                    {this.state.loadingView}
+                    <PhotoTable datas={this.state.datas}/>
                 </div>
             </MuiThemeProvider>
-        );
+        )
     }
 }
 
