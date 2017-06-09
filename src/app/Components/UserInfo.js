@@ -55,11 +55,11 @@ const styles = {
     },
     card_head: {},
     card_title: {
-        paddingTop: 42,
+        marginTop: 42,
         marginLeft: 24
     },
     card_like: {
-        paddingTop: 24,
+        marginTop: 24,
         paddingBottom: 12,
         fontSize: 18,
         color: grey800
@@ -72,11 +72,11 @@ const styles = {
         paddingBottom: 12,
     },
     card_like_info_lay: {
-        paddingTop: 6,
+        marginTop: 6,
         paddingBottom: 6,
     },
     card_like_info: {
-        paddingTop: 24,
+        marginTop: 24,
         paddingLeft: 12,
         fontSize: 14,
         color: grey600

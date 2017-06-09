@@ -41,7 +41,7 @@ const styles = {
     head_title2: {
         color: '#FFFFFF',
         fontSize: 24,
-        paddingTop: 24
+        marginTop: 24
     }
     ,
 };
