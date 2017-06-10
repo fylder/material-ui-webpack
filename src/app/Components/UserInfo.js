@@ -147,6 +147,7 @@ class UserInfo extends Component {
                                 <div style={styles.card_like_info_lay}>
                                     <span style={styles.card_like_info}>摄影</span>
                                     <span style={styles.card_like_info}>花草</span>
+                                    <span style={styles.card_like_info}>好有魔性的笑</span>
                                     <span style={styles.card_like_info}>带着毛驴去兜风</span>
                                 </div>
                             </div>
