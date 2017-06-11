@@ -25,10 +25,13 @@ const styles = {
         background: '#3E434E',
         marginTop: 12,
         width: '100%',
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        minWidth: 48
     },
     button_label: {
-        padding: 8
+        paddingLeft: 4,
+        paddingRight: 8,
+        margin: 0
     },
     card: {
         background: '#373C47',
@@ -144,6 +147,7 @@ class LinkButton extends Component {
                 backgroundColor={this.state.active ? '#2D323C' : '#373C47'}
                 labelColor="#FFFFFF"
                 style={ styles.button }
+                labelStyle={styles.button_label}
                 onTouchTap={this.handleTouchTapTools.bind(this, this.state.info)}
                 icon={<FontIcon className="muidocs-icon-custom-github"/>}
             />

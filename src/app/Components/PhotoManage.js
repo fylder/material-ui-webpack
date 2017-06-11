@@ -17,6 +17,8 @@ import {
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
+import Snackbar from "material-ui/Snackbar";
+import "whatwg-fetch";
 
 const styles = {
     container: {
@@ -43,8 +45,18 @@ class PhotoTable extends Component {
         super(props, context);
     }
 
-    handleTouchTapUpload = (id) => {
-        console.log("id:" + id);
+    handleTouchTapUpload = (id, name) => {
+        if (id > 0) {
+            setTimeout(function () {
+                window.location.href = "user/upload?cid=" + id + "&collectName=" + name;
+            }, 400);
+        } else {
+            this.props.callbackMsg();
+            // this.setState({
+            //     open: true,
+            //     msg: "异常"
+            // });
+        }
     };
 
     render() {
@@ -65,12 +77,12 @@ class PhotoTable extends Component {
                         hoverable={true}>
                         <TableRowColumn>{index + 1}</TableRowColumn>
                         <TableRowColumn>{data.name}</TableRowColumn>
-                        <TableRowColumn>{data.info}</TableRowColumn>
+                        <TableRowColumn>{data.describe}</TableRowColumn>
                         <TableRowColumn>
                             <RaisedButton label="upload"
                                           secondary={true}
                                           style={style}
-                                          onTouchTap={this.handleTouchTapUpload.bind(this, data.id)}
+                                          onTouchTap={this.handleTouchTapUpload.bind(this, data.cid, data.name)}
                             />
                         </TableRowColumn>
                     </TableRow>);
@@ -89,46 +101,97 @@ const LinearProgressLoaded = () => (
 class PhotoManage extends Component {
     constructor(props) {
         super(props);
+        this.handleMsgShow = this.handleMsgShow.bind(this);
+        this.handleRequestClose = this.handleRequestClose.bind(this);
+
         this.state = {
+            open: false,
+            msg: "",
             loading: true,
             loadingView: <LinearProgressLoading/>,
             datas: [{
-                'id': 0,
-                'name': '未知',
-                'info': "未知",
-                'gender': '未知'
+                "cid": 0,
+                "name": "回忆",
+                "describe": "校园"
             }]
         };
 
-        setTimeout(() => {
-            this.setState({
-                loading: false,
-                loadingView: <LinearProgressLoaded/>,
-                datas: [{
-                    'id': 1,
-                    'name': 'ahh',
-                    'info': "ahh's walala",
-                    'gender': 'male'
-                }, {
-                    'id': 2,
-                    'name': 'wakaka',
-                    'info': "wakaka's ahh",
-                }, {
-                    'id': 3,
-                    'name': 'walala',
-                    'info': "walala's ahh",
+        fetch('user/photo/manage_json', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            }
+        }).then((response)=> {
+            return response.json()
+        }).then((json)=> {
+                console.log('parsed json', json);
+                if (json.result == 1) {
+                    setTimeout(() => {
+                        this.setState({
+                            loading: false,
+                            loadingView: <LinearProgressLoaded/>,
+                            datas: json.collects
+                        });
+                    }, 2000);
+                } else {
+                    setTimeout(() => {
+                        this.setState({
+                            loading: false,
+                            loadingView: <LinearProgressLoaded/>,
+                            datas: [{
+                                "cid": 0,
+                                "name": "未知",
+                                "describe": "咦，找不到咯"
+                            }]
+                        });
+                    }, 2000);
                 }
-                ]
-            });
-        }, 2000);
+
+            }
+        ).catch((ex)=> {
+            setTimeout(() => {
+                this.setState({
+                    loading: false,
+                    loadingView: <LinearProgressLoaded/>,
+                    datas: [{
+                        "cid": 0,
+                        "name": "异常",
+                        "describe": "咦，找不到咯"
+                    }]
+                });
+            }, 2000);
+        });
     }
+
+
+    handleMsgShow() {
+        this.setState({
+            open: true,
+            msg: "相册异常"
+        });
+    };
+
+    handleRequestClose() {
+        this.setState({
+            open: false,
+        });
+    };
+
 
     render() {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div style={styles.container}>
                     {this.state.loadingView}
-                    <PhotoTable datas={this.state.datas}/>
+                    <PhotoTable datas={this.state.datas} callbackMsg={this.handleMsgShow}/>
+                    <Snackbar
+                        open={this.state.open}
+                        message={this.state.msg}
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </div>
             </MuiThemeProvider>
         )
