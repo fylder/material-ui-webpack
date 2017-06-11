@@ -23,7 +23,7 @@ const config = {
         // output config
         output: {
             path: path.resolve(__dirname, 'build'), // Path of output file
-            filename: 'react/[name].js', // Name of output file
+            filename: 'assets/react/[name].js', // Name of output file
         },
         plugins: [
             // Define production build to allow React to strip out unnecessary checks
@@ -41,7 +41,7 @@ const config = {
             }),
             new CommonsChunkPlugin({
                     name: ['react'],
-                    filename: 'react/react.js',
+                    filename: 'assets/react/react.js',
                     minChunks: Infinity
                 }
             ),

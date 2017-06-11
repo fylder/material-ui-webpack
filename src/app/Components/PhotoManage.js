@@ -128,13 +128,11 @@ class PhotoManage extends Component {
         }).then((json)=> {
                 console.log('parsed json', json);
                 if (json.result == 1) {
-                    setTimeout(() => {
-                        this.setState({
-                            loading: false,
-                            loadingView: <LinearProgressLoaded/>,
-                            datas: json.collects
-                        });
-                    }, 2000);
+                    this.setState({
+                        loading: false,
+                        loadingView: <LinearProgressLoaded/>,
+                        datas: json.collects
+                    });
                 } else {
                     setTimeout(() => {
                         this.setState({

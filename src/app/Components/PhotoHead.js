@@ -9,6 +9,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
 import FlatButton from "material-ui/FlatButton";
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
+import "whatwg-fetch";
 
 const styles = {
 
@@ -61,7 +62,18 @@ class PhotoHead extends Component {
 
     //退出
     handleTouchTapExit() {
-        window.location.href = "login.html";
+        fetch('user/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            }
+        }).then(()=> {
+            window.location.href = "login";
+        }).catch((ex)=> {
+            window.location.href = "login";
+        });
     }
 
 
