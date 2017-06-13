@@ -1,16 +1,13 @@
 /**
  * Created by fylder on 2017/6/11.
  */
-
 import React, {Component} from "react";
-import {pink400, pink500, grey50, grey600, grey700, grey800, white} from "material-ui/styles/colors";
+import {pink400, pink500, grey50, grey200, grey300, grey600, grey700, grey800, white} from "material-ui/styles/colors";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import {GridList, GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 const styles = {
 
@@ -31,6 +28,13 @@ const styles = {
         margin: 0,
         paddingLeft: '8%',
         paddingRight: '8%'
+    },
+    card_collect: {
+        background: grey50,
+        height: 240,
+        marginLeft: 2,
+        marginRight: 2,
+        marginTop: 2
     },
 
     head_title: {
@@ -86,6 +90,9 @@ const styles = {
     },
     collect_back: {
         marginTop: 24,
+        marginLeft: 8,
+        marginRight: 8,
+        marginBottom: 4,
         float: 'left'
     },
     collect_add: {
@@ -116,6 +123,18 @@ const styles = {
         width: '100%',
         height: '40%'
     },
+    subtitle: {
+        fontSize: 12,
+        color: grey300,
+        fontWeight: 'normal'
+    },
+    subtitle_div: {
+        marginTop: 2
+    },
+    subtitle_time: {
+        float: 'right',
+        marginRight: 8
+    }
 };
 
 const muiTheme = getMuiTheme({
@@ -123,60 +142,70 @@ const muiTheme = getMuiTheme({
         accent1Color: pink500,
     },
 });
-const tilesData = [
-    {
-        id: 1,
-        img: 'yan/yan.jpg',
-        title: 'Breakfast',
-        author: 'jill111',
-    },
-    {
-        id: 2,
-        img: 'yan/yan.jpg',
-        title: 'Tasty burger',
-        author: 'pashminu',
-    },
-    {
-        id: 3,
-        img: 'yan/yan.jpg',
-        title: 'Camera',
-        author: 'Danson67',
-    },
-    {
-        id: 4,
-        img: 'yan/yan.jpg',
-        title: 'Morning',
-        author: 'fancycrave1',
-    },
-    {
-        id: 5,
-        img: 'yan/yan.jpg',
-        title: 'Hats',
-        author: 'Hans',
-    },
-    {
-        id: 6,
-        img: 'yan/yan.jpg',
-        title: 'Honey',
-        author: 'fancycravel',
-    },
-    {
-        id: 7,
-        img: 'yan/yan.jpg',
-        title: 'Vegetables',
-        author: 'jill111',
-    },
-    {
-        id: 8,
-        img: 'yan/yan.jpg',
-        title: 'Water plant',
-        author: 'BkrmadtyaKarki',
-    },
-];
+
 class PhotoCollect extends Component {
     constructor(props, context) {
         super(props, context);
 
+        this.state = {
+            open: false,
+            msg: "",
+            loading: true,
+            datas: [{
+                "cid": 1,
+                "name": "回忆",
+                "describe": "校园",
+                "img": "http://127.0.0.1:8080/picture/upload/1/回忆/cover_1469351312571.jpg",
+                "time": "05-20 20:27"
+            }]
+        };
+
+        fetch('user/photo/collect_json', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            }
+        }).then((response)=> {
+            return response.json()
+        }).then((json)=> {
+                console.log('parsed json', json);
+                if (json.result == 1) {
+                    this.setState({
+                        loading: false,
+                        datas: json.covers
+                    });
+                } else {
+                    setTimeout(() => {
+                        this.setState({
+                            loading: false,
+                            datas: [{
+                                "cid": 1,
+                                "name": "回忆",
+                                "describe": "校园",
+                                "img": "#",
+                                "time": "05-20 20:27"
+                            }]
+                        });
+                    }, 2000);
+                }
+
+            }
+        ).catch((ex)=> {
+            setTimeout(() => {
+                this.setState({
+                    loading: false,
+                    datas: [{
+                        "cid": 0,
+                        "name": "异常",
+                        "img": "yan/yan.jpg",
+                        "describe": "咦，找不到咯",
+                        "time": "05-20 20:27"
+                    }]
+                });
+            }, 2000);
+        });
     }
 
     render() {
@@ -186,7 +215,7 @@ class PhotoCollect extends Component {
                 <div style={styles.container}>
                     <Card style={styles.card} zDepth={2}>
                         <div style={styles.photo_top}>
-                            <FloatingActionButton href={'user/collect'}
+                            <FloatingActionButton href={'home'}
                                                   style={styles.collect_back}
                                                   secondary={true}>
                                 <span style={ styles.card_photo_span}>返回</span>
@@ -199,15 +228,21 @@ class PhotoCollect extends Component {
                                     cols={3}
                                     padding={16}
                                     style={styles.gridList}>
-                                    {tilesData.map((tile) => (
+
+                                    {this.state.datas.map((tile) => (
                                         <GridTile
-                                            key={tile.id}
-                                            title={tile.title}
-                                            actionIcon={<IconButton><StarBorder color="rgb(0, 188, 212)"/></IconButton>}
+                                            key={tile.cid}
+                                            title={tile.name}
+                                            subtitle={<div style={styles.subtitle_div}>
+                                                <span>{tile.describe}<span
+                                                    style={styles.subtitle_time}>{tile.time}</span></span>
+                                            </div>}
                                             titleStyle={styles.titleStyle}
-                                            titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+                                            subtitleStyle={styles.subtitle}
+                                            titleBackground="linear-gradient(to top, rgba(55, 60, 71, 0.9) 0%,rgba(55, 60, 71, 0.3) 80%,rgba(55, 60, 71, 0.1) 100%)">
                                             <img src={tile.img}/>
                                         </GridTile>
+
                                     ))}
                                 </GridList>
                             </div>
