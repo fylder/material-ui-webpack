@@ -8,6 +8,8 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import {GridList, GridTile} from 'material-ui/GridList';
+import Snackbar from "material-ui/Snackbar";
+import "whatwg-fetch";
 
 const styles = {
 
@@ -147,6 +149,9 @@ class PhotoCollect extends Component {
     constructor(props, context) {
         super(props, context);
 
+        this.handleMsgShow = this.handleMsgShow.bind(this);
+        this.handleRequestClose = this.handleRequestClose.bind(this);
+
         this.state = {
             open: false,
             msg: "",
@@ -204,9 +209,31 @@ class PhotoCollect extends Component {
                         "time": "05-20 20:27"
                     }]
                 });
-            }, 2000);
+            }, 77);
         });
     }
+
+    handleTouchTapPicture = (cid) => {
+        if (cid > 0) {
+            setTimeout(function () {
+                window.location.href = "user/pictures?cid=" + cid;
+            }, 400);
+        } else {
+            this.handleMsgShow()
+        }
+    };
+
+    handleMsgShow() {
+        this.setState({
+            open: true,
+            msg: "相册找不见咯"
+        });
+    };
+    handleRequestClose() {
+        this.setState({
+            open: false,
+        });
+    };
 
     render() {
 
@@ -240,7 +267,8 @@ class PhotoCollect extends Component {
                                             titleStyle={styles.titleStyle}
                                             subtitleStyle={styles.subtitle}
                                             titleBackground="linear-gradient(to top, rgba(55, 60, 71, 0.9) 0%,rgba(55, 60, 71, 0.3) 80%,rgba(55, 60, 71, 0.1) 100%)">
-                                            <img src={tile.img}/>
+                                            <img src={tile.img}
+                                                 onClick={this.handleTouchTapPicture.bind(this, tile.cid)}/>
                                         </GridTile>
 
                                     ))}
@@ -248,6 +276,12 @@ class PhotoCollect extends Component {
                             </div>
                         </div>
                     </Card>
+                    <Snackbar
+                        open={this.state.open}
+                        message={this.state.msg}
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleRequestClose}
+                    />
                 </div>
             </MuiThemeProvider>
         );
