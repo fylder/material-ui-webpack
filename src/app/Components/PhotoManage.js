@@ -48,7 +48,7 @@ class PhotoTable extends Component {
     handleTouchTapUpload = (id, name) => {
         if (id > 0) {
             setTimeout(function () {
-                window.location.href = "user/upload?cid=" + id + "&collectName=" + name;
+                window.location.href = "/photo/user/upload?cid=" + id + "&collectName=" + name;
             }, 400);
         } else {
             this.props.callbackMsg();

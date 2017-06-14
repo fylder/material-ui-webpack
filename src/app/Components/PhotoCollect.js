@@ -156,13 +156,7 @@ class PhotoCollect extends Component {
             open: false,
             msg: "",
             loading: true,
-            datas: [{
-                "cid": 1,
-                "name": "回忆",
-                "describe": "校园",
-                "img": "http://127.0.0.1:8080/picture/upload/1/回忆/cover_1469351312571.jpg",
-                "time": "05-20 20:27"
-            }]
+            datas: []
         };
 
         fetch('user/photo/collect_json', {
@@ -216,7 +210,7 @@ class PhotoCollect extends Component {
     handleTouchTapPicture = (cid) => {
         if (cid > 0) {
             setTimeout(function () {
-                window.location.href = "user/pictures?cid=" + cid;
+                window.location.href = "/photo/user/pictures?cid=" + cid;
             }, 400);
         } else {
             this.handleMsgShow()

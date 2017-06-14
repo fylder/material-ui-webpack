@@ -76,7 +76,7 @@ class Login extends Component {
                         msg: "登录成功"
                     });
                     setTimeout(function () {
-                        window.location.href = "home";
+                        window.location.href = "/photo/home";
                     }, 700);
                 } else {
                     this.setState({

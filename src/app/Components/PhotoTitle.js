@@ -56,9 +56,9 @@ class PhotoTitle extends Component {
 
     handleTouchTapLogin() {
         if (this.state.info == "LOGIN") {
-            window.location.href = "login";
+            window.location.href = "/photo/login";
         } else {
-            window.location.href = "register";
+            window.location.href = "/photo/register";
         }
     }
 

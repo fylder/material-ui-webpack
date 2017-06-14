@@ -109,7 +109,7 @@ class UserInfo extends Component {
 
 
     handleTouchTapLogin() {
-        window.location.href = "register";
+        window.location.href = "/photo/register";
     }
 
     render() {

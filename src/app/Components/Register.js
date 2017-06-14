@@ -90,7 +90,7 @@ class Register2 extends Component {
                         msg: "注册成功"
                     });
                     setTimeout(function () {
-                        window.location.href = "home";
+                        window.location.href = "/photo/home";
                     }, 700);
                 } else {
                     this.setState({

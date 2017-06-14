@@ -70,9 +70,9 @@ class PhotoHead extends Component {
                 "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
             }
         }).then(()=> {
-            window.location.href = "login";
+            window.location.href = "/photo/login";
         }).catch((ex)=> {
-            window.location.href = "login";
+            window.location.href = "/photo/login";
         });
     }
 
