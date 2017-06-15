@@ -123,7 +123,8 @@ const styles = {
     },
     gridList: {
         width: '100%',
-        height: '40%'
+        height: '40%',
+        paddingBottom: 16
     },
     subtitle: {
         fontSize: 12,
@@ -211,7 +212,7 @@ class PhotoCollect extends Component {
         if (cid > 0) {
             setTimeout(function () {
                 window.location.href = "/photo/user/pictures?cid=" + cid;
-            }, 400);
+            }, 100);
         } else {
             this.handleMsgShow()
         }
@@ -223,6 +224,7 @@ class PhotoCollect extends Component {
             msg: "相册找不见咯"
         });
     };
+
     handleRequestClose() {
         this.setState({
             open: false,
@@ -252,6 +254,7 @@ class PhotoCollect extends Component {
 
                                     {this.state.datas.map((tile) => (
                                         <GridTile
+                                            className="slickCard"
                                             key={tile.cid}
                                             title={tile.name}
                                             subtitle={<div style={styles.subtitle_div}>
