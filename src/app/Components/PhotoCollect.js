@@ -212,7 +212,7 @@ class PhotoCollect extends Component {
                     }, {
                         "cid": 2,
                         "name": "异常",
-                        "img": "yan/yan.jpg",
+                        "img": "yan/yan2.jpg",
                         "describe": "咦，找不到咯",
                         "time": "05-20 20:27"
                     }]
@@ -242,6 +242,10 @@ class PhotoCollect extends Component {
         this.setState({
             open: false,
         });
+    };
+
+    onImgError = (e) => {
+        e.target.src = "assets/img/404.png"
     };
 
     render() {
@@ -306,6 +310,7 @@ class PhotoCollect extends Component {
                                                         subtitleStyle={styles.subtitle}
                                                         titleBackground="linear-gradient(to top, rgba(55, 60, 71, 0.9) 0%,rgba(55, 60, 71, 0.3) 80%,rgba(55, 60, 71, 0.1) 100%)">
                                                         <img src={tile.img}
+                                                             onError={this.onImgError.bind(this)}
                                                              onClick={this.handleTouchTapPicture.bind(this, tile.cid)}/>
                                                     </GridTile>
 
