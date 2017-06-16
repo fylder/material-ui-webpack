@@ -10,6 +10,7 @@ import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import FontIcon from "material-ui/FontIcon";
 import Snackbar from "material-ui/Snackbar";
+import Measure from 'react-measure';
 import "whatwg-fetch";
 
 const styles = {
@@ -19,6 +20,14 @@ const styles = {
     },
     card: {
         padding: 80,
+        display: 'inline-block'
+    },
+    card_720: {
+        padding: 40,
+        display: 'inline-block'
+    },
+    card_480: {
+        padding: 20,
         display: 'inline-block'
     },
     login_title: {}
@@ -117,38 +126,56 @@ class Login extends Component {
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
-                <div style={styles.container}>
-                    <Card style={styles.card} zDepth={3}>
-                        <CardTitle title="user login" style={styles.login_title}/>
-                        <TextField
-                            id={"username"}
-                            floatingLabelText="First Name"
-                            value={this.state.username}
-                            onChange={this.handleUsernameChange}
-                        /><br />
-                        <TextField
-                            id={"password"}
-                            floatingLabelText="Password"
-                            type="password"
-                            value={this.state.password}
-                            onChange={this.handlePasswordChange}
-                        /><br />
-                        <RaisedButton
-                            label="LOGIN"
-                            labelPosition="before"
-                            onTouchTap={this.handleTouchTapLogin}
-                            primary={true}
-                            icon={<FontIcon className="muidocs-icon-custom-github"/>}
-                            style={styles.button}
-                        />
-                    </Card>
-                    <Snackbar
-                        open={this.state.open}
-                        message={this.state.msg}
-                        autoHideDuration={4000}
-                        onRequestClose={this.handleRequestClose}
-                    />
-                </div>
+                <Measure whitelist={['width']}>
+                    {({width}) => {
+                        console.info("width:" + width)
+                        let card_style = styles.card;
+                        if (width >= 1024) {
+                            card_style = styles.card;
+                        } else if (width > 480) {
+                            card_style = styles.card_720;
+                        } else if (width > 7) {
+                            card_style = styles.card_480;
+                        }
+                        if (width > 0) {
+                            return ( <div style={styles.container}>
+                                <Card style={card_style} zDepth={3}>
+                                    <CardTitle title="user login" style={styles.login_title}/>
+                                    <TextField
+                                        id={"username"}
+                                        floatingLabelText="First Name"
+                                        value={this.state.username}
+                                        onChange={this.handleUsernameChange}
+                                    /><br />
+                                    <TextField
+                                        id={"password"}
+                                        floatingLabelText="Password"
+                                        type="password"
+                                        value={this.state.password}
+                                        onChange={this.handlePasswordChange}
+                                    /><br />
+                                    <RaisedButton
+                                        label="LOGIN"
+                                        labelPosition="before"
+                                        onTouchTap={this.handleTouchTapLogin}
+                                        primary={true}
+                                        icon={<FontIcon className="muidocs-icon-custom-github"/>}
+                                        style={styles.button}
+                                    />
+                                </Card>
+                                <Snackbar
+                                    open={this.state.open}
+                                    message={this.state.msg}
+                                    autoHideDuration={4000}
+                                    onRequestClose={this.handleRequestClose}
+                                />
+                            </div>)
+                        } else {
+                            return (<div style={styles.container}/>)
+                        }
+                    }
+                    }
+                </Measure>
             </MuiThemeProvider>
         );
     }

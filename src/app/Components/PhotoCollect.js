@@ -6,6 +6,7 @@ import {pink400, pink500, grey50, grey200, grey300, grey600, grey700, grey800, w
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
+import Measure from "react-measure";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import {GridList, GridTile} from 'material-ui/GridList';
 import Snackbar from "material-ui/Snackbar";
@@ -202,6 +203,18 @@ class PhotoCollect extends Component {
                         "img": "yan/yan.jpg",
                         "describe": "咦，找不到咯",
                         "time": "05-20 20:27"
+                    }, {
+                        "cid": 1,
+                        "name": "异常",
+                        "img": "yan/yan.jpg",
+                        "describe": "咦，找不到咯",
+                        "time": "05-20 20:27"
+                    }, {
+                        "cid": 2,
+                        "name": "异常",
+                        "img": "yan/yan.jpg",
+                        "describe": "咦，找不到咯",
+                        "time": "05-20 20:27"
                     }]
                 });
             }, 77);
@@ -235,51 +248,85 @@ class PhotoCollect extends Component {
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
-                <div style={styles.container}>
-                    <Card style={styles.card} zDepth={2}>
-                        <div style={styles.photo_top}>
-                            <FloatingActionButton href={'home'}
-                                                  style={styles.collect_back}
-                                                  secondary={true}>
-                                <span style={ styles.card_photo_span}>返回</span>
-                            </FloatingActionButton>
-                        </div>
-                        <div style={styles.photo_content}>
-                            <div style={styles.root}>
-                                <GridList
-                                    cellHeight={240}
-                                    cols={3}
-                                    padding={16}
-                                    style={styles.gridList}>
+                <Measure whitelist={['width']}>
+                    {({width}) => {
+                        console.info("width:" + width);
+                        let card_h = 240;
+                        let col = 3;
 
-                                    {this.state.datas.map((tile) => (
-                                        <GridTile
-                                            className="slickCard"
-                                            key={tile.cid}
-                                            title={tile.name}
-                                            subtitle={<div style={styles.subtitle_div}>
+                        //三个分割线
+                        let w = 1024;
+                        let w2 = 720;
+                        let w4 = 7;
+
+                        //三种相框尺寸
+                        let h = 240;
+                        let h2 = 180;
+                        let h4 = 140;
+                        if (width >= w) {
+                            card_h = h;
+                            col = 3;
+                        } else if (width > w2) {
+                            let i = h - h2;
+                            card_h = h - (w - width) / (w - w2) * i;
+                            col = 3;
+                        } else if (width > w4) {
+                            let i = h2 - h4;
+                            card_h = h2 - (w2 - width) / (w2 - w4) * i;
+                            col = 2;
+                        }
+                        if (width > 0) {
+                            return (<div style={styles.container}>
+                                <Card style={styles.card} zDepth={2}>
+                                    <div style={styles.photo_top}>
+                                        <FloatingActionButton href={'home'}
+                                                              style={styles.collect_back}
+                                                              secondary={true}>
+                                            <span style={ styles.card_photo_span}>返回</span>
+                                        </FloatingActionButton>
+                                    </div>
+                                    <div style={styles.photo_content}>
+                                        <div style={styles.root}>
+                                            <GridList
+                                                cellHeight={card_h}
+                                                cols={col}
+                                                padding={16}
+                                                style={styles.gridList}>
+
+                                                {this.state.datas.map((tile) => (
+                                                    <GridTile
+                                                        className="slickCard"
+                                                        key={tile.cid}
+                                                        title={tile.name}
+                                                        subtitle={<div style={styles.subtitle_div}>
                                                 <span>{tile.describe}<span
                                                     style={styles.subtitle_time}>{tile.time}</span></span>
-                                            </div>}
-                                            titleStyle={styles.titleStyle}
-                                            subtitleStyle={styles.subtitle}
-                                            titleBackground="linear-gradient(to top, rgba(55, 60, 71, 0.9) 0%,rgba(55, 60, 71, 0.3) 80%,rgba(55, 60, 71, 0.1) 100%)">
-                                            <img src={tile.img}
-                                                 onClick={this.handleTouchTapPicture.bind(this, tile.cid)}/>
-                                        </GridTile>
+                                                        </div>}
+                                                        titleStyle={styles.titleStyle}
+                                                        subtitleStyle={styles.subtitle}
+                                                        titleBackground="linear-gradient(to top, rgba(55, 60, 71, 0.9) 0%,rgba(55, 60, 71, 0.3) 80%,rgba(55, 60, 71, 0.1) 100%)">
+                                                        <img src={tile.img}
+                                                             onClick={this.handleTouchTapPicture.bind(this, tile.cid)}/>
+                                                    </GridTile>
 
-                                    ))}
-                                </GridList>
-                            </div>
-                        </div>
-                    </Card>
-                    <Snackbar
-                        open={this.state.open}
-                        message={this.state.msg}
-                        autoHideDuration={4000}
-                        onRequestClose={this.handleRequestClose}
-                    />
-                </div>
+                                                ))}
+                                            </GridList>
+                                        </div>
+                                    </div>
+                                </Card>
+                                <Snackbar
+                                    open={this.state.open}
+                                    message={this.state.msg}
+                                    autoHideDuration={4000}
+                                    onRequestClose={this.handleRequestClose}
+                                />
+                            </div>)
+                        } else {
+                            return (<div style={styles.container}/>)
+                        }
+                    }
+                    }
+                </Measure>
             </MuiThemeProvider>
         );
     }

@@ -3,11 +3,36 @@
  */
 
 import React, {Component} from "react";
+import {pink500, grey50} from "material-ui/styles/colors";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
 import Gallery from "react-photo-gallery";
-import Measure from 'react-measure';
-import Lightbox from 'react-images';
-import _ from 'lodash';
+import Measure from "react-measure";
+import Lightbox from "react-images";
+import _ from "lodash";
 
+const styles = {
+
+    card: {
+        background: grey50,
+        height: 'auto',
+        margin: 0,
+        paddingLeft: '8%',
+        paddingRight: '8%',
+        paddingBottom: 16,
+        overflow: 'hidden'
+    },
+    photo_lay: {
+        overflow: 'hidden'
+    }
+};
+
+const muiTheme = getMuiTheme({
+    palette: {
+        accent1Color: pink500,
+    },
+});
 
 class PicturePreview extends Component {
 
@@ -71,7 +96,6 @@ class PicturePreview extends Component {
         }).then((response)=> {
             return response.json()
         }).then((json)=> {
-                console.info("json:" + json);
                 let photos = [];
                 json.photoset.photo.forEach(function (obj, i, array) {
                     let aspectRatio = parseFloat(obj.width_o / obj.height_o);
@@ -104,48 +128,6 @@ class PicturePreview extends Component {
         ).catch((ex)=> {
             console.log("error:" + ex);
         });
-
-
-        // $.ajax({
-        //     url: 'https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=372ef3a005d9b9df062b8240c326254d&photoset_id=72157680705961676&user_id=57933175@N08&format=json&per_page=21&page=' + this.state.pageNum + '&extras=url_m,url_c,url_l,url_h,url_o',
-        //     dataType: 'jsonp',
-        //     jsonpCallback: 'jsonFlickrApi',
-        //     cache: false,
-        //     success: function (data) {
-        //         let photos = [];
-        //         data.photoset.photo.forEach(function (obj, i, array) {
-        //             let aspectRatio = parseFloat(obj.width_o / obj.height_o);
-        //             photos.push({
-        //                 src: (aspectRatio >= 3) ? obj.url_c : obj.url_m,
-        //                 width: parseInt(obj.width_o),
-        //                 height: parseInt(obj.height_o),
-        //                 caption: obj.title,
-        //                 alt: obj.title,
-        //                 srcset: [
-        //                     obj.url_m + ' ' + obj.width_m + 'w',
-        //                     obj.url_c + ' ' + obj.width_c + 'w',
-        //                     obj.url_l + ' ' + obj.width_l + 'w',
-        //                     obj.url_h + ' ' + obj.width_h + 'w'
-        //                 ],
-        //                 sizes: [
-        //                     '(min-width: 480px) 50vw',
-        //                     '(min-width: 1024px) 33.3vw',
-        //                     '100vw'
-        //                 ]
-        //             });
-        //         });
-        //         this.setState({
-        //             photos: this.state.photos ? this.state.photos.concat(photos) : photos,
-        //             pageNum: this.state.pageNum + 1,
-        //             totalPages: data.photoset.pages
-        //         });
-        //     }.bind(this),
-        //     error: function (xhr, status, err) {
-        //         console.error(status, err.toString());
-        //     }.bind(this)
-        // });
-
-
     }
 
     openLightBox(index, event) {
@@ -200,21 +182,25 @@ class PicturePreview extends Component {
     render() {
         // no loading sign if its all loaded
         if (this.state.photos) {
-            return (
-                <div className="App">
-                    {this.renderGallery()}
-                    <Lightbox
-                        images={this.state.photos}
-                        backdropClosesModal={true}
-                        onClose={this.closeLightBox}
-                        onClickPrev={this.gotoPrevious}
-                        onClickNext={this.gotoNext}
-                        currentImage={this.state.currentImage}
-                        isOpen={this.state.lightBoxIsOpen}
-                        width={1600}
-                    />
-                    {!this.state.loadedAll && <div id="msg-loading-more" className="loading-msg">Loading</div>}
-                </div>
+            return (<MuiThemeProvider muiTheme={muiTheme}>
+                    <Card style={styles.card} zDepth={2}>
+                        <div className="App">
+                            {this.renderGallery()}
+                            <Lightbox
+                                images={this.state.photos}
+                                backdropClosesModal={true}
+                                onClose={this.closeLightBox}
+                                onClickPrev={this.gotoPrevious}
+                                onClickNext={this.gotoNext}
+                                currentImage={this.state.currentImage}
+                                isOpen={this.state.lightBoxIsOpen}
+                                width={1600}
+                            />
+                            {!this.state.loadedAll &&
+                            <div id="msg-loading-more" className="loading-msg">Loading</div>}
+                        </div>
+                    </Card>
+                </MuiThemeProvider>
             );
         }
         else {
@@ -228,4 +214,6 @@ class PicturePreview extends Component {
 }
 
 
-export default PicturePreview;
+export
+default
+PicturePreview;
