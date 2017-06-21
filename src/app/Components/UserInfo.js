@@ -156,7 +156,7 @@ class UserInfo extends Component {
                                     <span style={styles.card_like}>关于我</span>
                                 </div>
                                 <div style={styles.card_like_info_lay}>
-                                    <span style={styles.card_like_info}>山无陵，天地绝，乃敢与君绝</span>
+                                    <span style={styles.card_like_info}>当阳光穿透过你的秀发，每一秒都变成了慢动作，仿佛就像是电影里的女主角</span>
                                 </div>
                             </div>
                         </div>
