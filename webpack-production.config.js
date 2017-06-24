@@ -7,7 +7,7 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const config = {
         entry: {
             login: [
-                './src/app/app.js'],
+                './src/app/login.js'],
             register: [
                 './src/app/register.js'],
             home: [

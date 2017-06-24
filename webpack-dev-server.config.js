@@ -9,7 +9,7 @@ const config = {
         login: [
             // only- means to only hot reload for successful updates
             'webpack/hot/only-dev-server',
-            './src/app/app.js',],
+            './src/app/login.js',],
         register: [
             './src/app/register.js'],
         home: [

@@ -128,7 +128,6 @@ class Login extends Component {
             <MuiThemeProvider muiTheme={muiTheme}>
                 <Measure whitelist={['width']}>
                     {({width}) => {
-                        console.info("width:" + width)
                         let card_style = styles.card;
                         if (width >= 1024) {
                             card_style = styles.card;
