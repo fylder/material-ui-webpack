@@ -3,10 +3,11 @@
  */
 
 import React, {Component} from "react";
-import {pink500, grey50} from "material-ui/styles/colors";
+import {pink500, grey50, white} from "material-ui/styles/colors";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from "material-ui/Card";
+import FloatingActionButton from "material-ui/FloatingActionButton";
 import Gallery from "react-photo-gallery";
 import Measure from "react-measure";
 import Lightbox from "react-images";
@@ -25,7 +26,21 @@ const styles = {
     },
     photo_lay: {
         overflow: 'hidden'
-    }
+    },
+    photo_top: {
+        overflow: 'hidden',
+        paddingBottom: 12
+    },
+    collect_back: {
+        marginTop: 24,
+        marginLeft: 8,
+        marginRight: 8,
+        marginBottom: 4,
+        float: 'left'
+    },
+    card_photo_span: {
+        color: white
+    },
 };
 
 const muiTheme = getMuiTheme({
@@ -184,30 +199,43 @@ class PicturePreview extends Component {
         if (this.state.photos) {
             return (<MuiThemeProvider muiTheme={muiTheme}>
                     <Card style={styles.card} zDepth={2}>
-                        <div className="App">
-                            {this.renderGallery()}
-                            <Lightbox
-                                images={this.state.photos}
-                                backdropClosesModal={true}
-                                onClose={this.closeLightBox}
-                                onClickPrev={this.gotoPrevious}
-                                onClickNext={this.gotoNext}
-                                currentImage={this.state.currentImage}
-                                isOpen={this.state.lightBoxIsOpen}
-                                width={1600}
-                            />
-                            {!this.state.loadedAll &&
-                            <div id="msg-loading-more" className="loading-msg">Loading</div>}
+                        <div style={styles.photo_top}>
+                            <FloatingActionButton href={'/photo/user/collect'}
+                                                  style={styles.collect_back}
+                                                  secondary={true}>
+                                <span style={ styles.card_photo_span}>返回</span>
+                            </FloatingActionButton>
                         </div>
+                        {this.renderGallery()}
+                        <Lightbox
+                            images={this.state.photos}
+                            backdropClosesModal={true}
+                            onClose={this.closeLightBox}
+                            onClickPrev={this.gotoPrevious}
+                            onClickNext={this.gotoNext}
+                            currentImage={this.state.currentImage}
+                            isOpen={this.state.lightBoxIsOpen}
+                            width={1600}
+                        />
+                        {!this.state.loadedAll &&
+                        <div id="msg-loading-more" className="loading-msg">Loading</div>}
                     </Card>
                 </MuiThemeProvider>
             );
         }
         else {
-            return (
-                <div className="App">
-                    <div id="msg-app-loading" className="loading-msg">Loading</div>
-                </div>
+            return (<MuiThemeProvider muiTheme={muiTheme}>
+                    <Card style={styles.card} zDepth={2}>
+                        <div style={styles.photo_top}>
+                            <FloatingActionButton href={'/photo/user/collect'}
+                                                  style={styles.collect_back}
+                                                  secondary={true}>
+                                <span style={ styles.card_photo_span}>返回</span>
+                            </FloatingActionButton>
+                        </div>
+                        <div id="msg-app-loading" className="loading-msg">No thing!</div>
+                    </Card>
+                </MuiThemeProvider>
             );
         }
     }
